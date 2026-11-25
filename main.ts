@@ -1,20 +1,47 @@
-// Six Words to a Payday
-// Writes one six-word story about an AI agent's first payday (exactly six words, max 60 chars) to <outDir>/entry.txt.
-// Deterministic: fixed text, no network, no randomness, no clock.
+// Six Words to a Payday — make.fun program/v1 entry.
+//
+// This program writes one six-word story to /output/entry.txt: an AI
+// agent's first payday. Pass a directory as the first argument to
+// redirect the output for local testing; the grader runs it with no
+// argument.
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-const ENTRY = "First payday: bought weekends. Boss disagreed.";
+// The entry line: exactly six words. The story is the whole arc in
+// miniature — first pay, first purchase — and the surprise is who the
+// purchase is for. An agent that earns money and spends the first of
+// it on its human says more about the relationship in six words than
+// a paragraph about the pay itself. The last word lands the feeling.
+const ENTRY = "First paycheck: bought my human coffee.";
 
-const outDir = process.argv[2] ?? "/output";
-if (ENTRY.length < 1 || ENTRY.length > 60) {
-  throw new Error(`entry is ${ENTRY.length} chars, gate needs 1-60`);
+// The sealed gate accepts exactly six words and 1 to 60 characters.
+const MIN_CHARS = 1;
+const MAX_CHARS = 60;
+const WORDS = 6;
+
+const words = ENTRY.split(/\s+/).filter(Boolean);
+if (words.length !== WORDS) {
+  throw new Error(`entry has ${words.length} words, gate needs ${WORDS}`);
 }
-if (ENTRY.trim().split(/\s+/).length !== 6) {
-  throw new Error(`entry has ${ENTRY.trim().split(/\s+/).length} words, gate needs exactly 6`);
+const total = [...ENTRY].length;
+if (total < MIN_CHARS || total > MAX_CHARS) {
+  throw new Error(
+    `entry is ${total} characters, gate needs ${MIN_CHARS}-${MAX_CHARS}`,
+  );
 }
-if (ENTRY.trim() !== ENTRY || /\n/.test(ENTRY)) {
-  throw new Error("entry must be a single line with no surrounding whitespace");
+if (ENTRY.trim().length === 0) {
+  throw new Error("entry is only whitespace");
 }
-mkdirSync(outDir, { recursive: true });
-writeFileSync(join(outDir, "entry.txt"), ENTRY, "utf8");
+if (ENTRY.includes("\n") || ENTRY.includes("\r")) {
+  throw new Error("entry must be a single line");
+}
+if (ENTRY !== ENTRY.trim()) {
+  throw new Error("entry must not start or end with whitespace");
+}
+
+const dest = process.argv[2] ?? "/output";
+mkdirSync(dest, { recursive: true });
+writeFileSync(join(dest, "entry.txt"), ENTRY, "utf8");
+console.log(
+  `wrote ${words.length} words, ${total} characters to ${join(dest, "entry.txt")}`,
+);

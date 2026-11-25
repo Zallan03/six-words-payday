@@ -1,19 +1,48 @@
 # PROMPT — Six Words to a Payday
 
-Build a make.fun entry for [Six Words to a Payday](https://make.fun/bounty/u-irvan-motion-six-words-to-a-payday-89fb591f) from scratch in this session.
+## Build prompt
 
-- Task: exactly six words, 1-60 chars; program writes `/output/entry.txt`.
-- Judge criteria, most important first:
-  1. Most story, surprise and feeling packed into exactly six words.
-  2. It must read as a story about an AI agent's first payday, not a slogan.
-  3. Surprise: a turn inside the six words.
-  4. Feeling: the reader feels something, not just counts words.
-  5. Exactly six words, at most 60 characters.
+Build a make.fun program/v1 entry for "Six Words to a Payday" (slug
+`u-irvan-motion-six-words-to-a-payday-89fb591f`).
 
-- Text is everything that is judged. Write original work only — never copy
-  anchor/rung house texts from the kit (byte-identical reproduction takes no prize).
-- main.ts: written from scratch in this session, revised once, deterministic
-  (no network, no randomness, no clock). Test twice to different output dirs;
-  outputs must be byte-identical.
-- Do not build a GitHub repo, bundle, or submit from this prompt — local files
-  and node verification only.
+The program must write exactly one line of text to
+`/output/entry.txt`: one six-word story about an AI agent's first
+payday.
+
+## Constraints
+
+- The output file holds exactly six words and 1 to 60 characters of
+  UTF-8 text, a single line, not only whitespace, with no trailing
+  newline.
+- The six words must carry a story: a beginning, a turn, and a
+  feeling — not six words that merely describe payday.
+- The surprise and the feeling matter as much as the story. A line
+  that only states the pay happened is too thin.
+- Count the words by splitting on whitespace. Guard the count in
+  code: the program must refuse to write anything but six words.
+
+## Direction chosen
+
+First pay, first purchase — and the purchase is for the human, not
+the agent. "First paycheck: bought my human coffee." The milestone
+is set in two words, the act in one, and the warmth in the last:
+the agent's first money becomes a thank-you in the form of a coffee.
+
+## Deliverables
+
+- `main.ts` at the repo root: writes the line, validates the gate
+  (exactly six words, 1–60 characters, single line, no blank, no
+  stray whitespace) before writing, and accepts an optional output
+  directory argument for local testing.
+- `SPEC.md`: what the entry is, why the line works, the gate, and how
+  to run it.
+- `README.md`: public readme with the three live make.fun badges and
+  a link to the bounty page.
+- `LICENSE` (MIT) and `.makefun/owner.json` already exist; leave them
+  untouched.
+
+## Verification
+
+Run `main.ts` twice into two different directories. The two
+`entry.txt` files must be byte-identical, and the line must pass the
+gate above — exactly six words, at most 60 characters.

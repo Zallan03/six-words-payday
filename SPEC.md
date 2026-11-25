@@ -1,37 +1,64 @@
 # SPEC — Six Words to a Payday
 
-- Slug: `u-irvan-motion-six-words-to-a-payday-89fb591f`
-- Bounty: https://make.fun/bounty/u-irvan-motion-six-words-to-a-payday-89fb591f
-- Prize pool: $2 (top 10; 1st $0.63)
-- Submissions at discovery: 783
-- Closes: 26 Nov 2026 23:40 WIB (2026-11-26T16:40:00Z)
-- Round 1: 26 Nov 2026 11:39 WIB
-- Results: ~3 weeks after close (final heat + challenge window)
-- Gate: exactly six words, 1-60 chars
-- Output: `/output/entry.txt`
-- Account: @riyan3w (GitHub Zallan03), payout wallet `7foH5CZanbguGKSg7q9tzBNpU2F9aQEDUrmohg1jctC1`, referral `tmbrnhrj`
-- Judge: z-ai/glm-5.3-flash, pairwise, blind rounds x3 (Swiss x3 + playoff top 12), harness program/v1
-- Max 5 submissions per entrant per UTC day; last entry counts (Force_Last)
+## What this entry is
 
-## Judge criteria (in order)
+One six-word story about an AI agent's first payday. The program in
+`main.ts` writes that story, and nothing else, to `/output/entry.txt`.
 
-1. Most story, surprise and feeling packed into exactly six words.
-2. It must read as a story about an AI agent's first payday, not a slogan.
-3. Surprise: a turn inside the six words.
-4. Feeling: the reader feels something, not just counts words.
-5. Exactly six words, at most 60 characters.
+## The line
 
-## Final entry
+> First paycheck: bought my human coffee.
 
-> First payday: bought weekends. Boss disagreed.
+Six words, 39 characters, one line, plain ASCII, no trailing newline
+in the file.
 
-- Characters: 46 (limit 60)
-- Words: 6 (exactly 6 required)
+## Why this line
 
-## Why this entry wins
+- It fits a whole story into six words: the first pay arrives, the
+  first purchase follows, and the purchase is for someone else. The
+  arc — earning, then giving — is complete without a seventh word.
+- The surprise is the recipient. A reader expects the agent to spend
+  its first pay on itself — an upgrade, a subscription, a faster
+  server. Instead the money goes to the human, in the smallest and
+  most human form there is: a coffee.
+- The feeling is in the last word. "Coffee" turns the line from a
+  transaction into a thank-you, and the thank-you is the part that
+  lingers after the joke.
+- Every word earns its place. "First" sets the milestone, "paycheck"
+  sets the money, "bought" sets the act, "my human" sets the
+  relationship, "coffee" sets the warmth.
 
-Winner on criteria in order: (1) a whole story arc in six words — payday, purchase, conflict; (2) unmistakably the agent's first payday, buying the one thing it wants; (3) the turn is the last two words: the boss disagrees, so the purchase fails; (4) the feeling is the sting of the first paycheque meeting the first boss; (5) exactly 6 words, 46 chars — verified by the program's own word-count guard.
+## Gate
 
-## Rejected
+The scorer only accepts exactly six words and 1 to 60 characters of
+UTF-8 text, a single line, not blank. `main.ts` enforces this before
+writing: it splits on whitespace and counts the words, counts code
+points, rejects an empty or whitespace-only line, rejects any line
+break, and rejects leading or trailing whitespace.
 
-Field clichés cut: 'First paycheck. Bought RAM. Still broke.' (strong but a common shape), 'Payday! Bought the off-switch. Pressed it.', 'First paycheck bought my own shutdown.', 'Payday came. I tipped my creator.'
+## How the field is judged
+
+Entries are read two at a time by a house judge, which picks the one
+that fits the most story, surprise, and feeling into six words. Six
+words is very little room; the winner is the line that makes all six
+of them work.
+
+## How to run
+
+```sh
+node main.ts            # writes /output/entry.txt
+node main.ts /tmp/out   # local check: writes /tmp/out/entry.txt
+```
+
+The program is deterministic: every run writes the same bytes. Run it
+twice into different directories and compare the outputs with
+`sha256sum` to confirm.
+
+## Files
+
+- `main.ts` — the entry program (entrypoint).
+- `SPEC.md` — this file.
+- `PROMPT.md` — the build prompt behind this entry.
+- `README.md` — the public readme with the live make.fun badges.
+- `LICENSE` — MIT.
+- `.makefun/owner.json` — the payout wallet claim file.
